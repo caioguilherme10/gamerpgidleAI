@@ -1,0 +1,153 @@
+/* Game Animations */
+
+/* Hero card hover animation */
+.hero-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(233, 69, 96, 0.7);
+}
+
+/* Button animations */
+.action-button {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-button:hover {
+    transform: scale(1.05);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
+
+/* Battle animations */
+@keyframes attack {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(20px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes damage {
+    0% { transform: translateX(0); opacity: 1; }
+    25% { transform: translateX(-10px); opacity: 0.8; }
+    50% { transform: translateX(5px); opacity: 0.9; }
+    75% { transform: translateX(-5px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes heal {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+    50% { box-shadow: 0 0 10px 5px rgba(76, 175, 80, 0.7); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+@keyframes defeat {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(20px); opacity: 0; }
+}
+
+.attacking {
+    animation: attack 0.5s ease-in-out;
+}
+
+.damaged {
+    animation: damage 0.5s ease-in-out;
+}
+
+.healing {
+    animation: heal 1s ease-in-out;
+}
+
+.defeated {
+    animation: defeat 1s ease-in-out forwards;
+}
+
+/* Ability animations */
+@keyframes ability-cast {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(147, 112, 219, 0); }
+    50% { transform: scale(1.2); box-shadow: 0 0 15px 5px rgba(147, 112, 219, 0.7); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(147, 112, 219, 0); }
+}
+
+.casting-ability {
+    animation: ability-cast 0.8s ease-in-out;
+}
+
+/* Summon hero animation */
+@keyframes summon {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.summoning {
+    animation: summon 0.8s ease-out forwards;
+}
+
+/* Idle rewards collection animation */
+@keyframes collect-rewards {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+.collecting-rewards {
+    animation: collect-rewards 0.5s ease-in-out;
+}
+
+/* Battle log new entry animation */
+@keyframes new-log-entry {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.new-log-entry {
+    animation: new-log-entry 0.3s ease-out forwards;
+}
+
+/* Resource change animation */
+@keyframes resource-change {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.resource-change {
+    animation: resource-change 0.5s ease-in-out;
+}
+
+/* Level up animation */
+@keyframes level-up {
+    0% { transform: scale(1); text-shadow: 0 0 0 rgba(233, 69, 96, 0); }
+    50% { transform: scale(1.3); text-shadow: 0 0 10px rgba(233, 69, 96, 0.8); }
+    100% { transform: scale(1); text-shadow: 0 0 0 rgba(233, 69, 96, 0); }
+}
+
+.level-up {
+    animation: level-up 1s ease-in-out;
+}
+
+/* Target selection animation */
+@keyframes target-appear {
+    0% { opacity: 0; transform: translate(-50%, -60%); }
+    100% { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.target-selection {
+    animation: target-appear 0.3s ease-out forwards;
+}
+
+/* Target button hover animation */
+@keyframes target-hover {
+    0% { background-color: #0f3460; }
+    100% { background-color: #1a1a2e; }
+}
+
+.target-button:hover {
+    animation: target-hover 0.2s ease-out forwards;
+}

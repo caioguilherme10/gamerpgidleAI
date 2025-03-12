@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFK Arena Style Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="resources">
+                <div class="resource gold">
+                    <img src="assets/gold.png" alt="Gold" class="resource-icon">
+                    <span id="gold-amount">1000</span>
+                </div>
+                <div class="resource gems">
+                    <img src="assets/gems.png" alt="Gems" class="resource-icon">
+                    <span id="gems-amount">50</span>
+                </div>
+                <div class="resource exp">
+                    <img src="assets/exp.png" alt="Experience" class="resource-icon">
+                    <span id="exp-amount">0</span>
+                </div>
+            </div>
+            <div class="player-info">
+                <div class="player-level">Level <span id="player-level">1</span></div>
+                <div class="player-name">Player</div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="heroes-container">
+                <h2>Your Heroes</h2>
+                <div class="heroes-grid" id="heroes-grid">
+                    <!-- Heroes will be added here dynamically -->
+                </div>
+                <button id="summon-hero" class="action-button">Summon Hero (100 Gems)</button>
+            </div>
+
+            <div class="battle-container">
+                <h2>Battle Arena</h2>
+                <div class="battle-stage">
+                    <div class="player-team" id="player-team">
+                        <!-- Player heroes in battle will appear here -->
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="enemy-team" id="enemy-team">
+                        <!-- Enemy heroes will appear here -->
+                    </div>
+                </div>
+                <div class="battle-controls">
+                    <button id="start-battle" class="action-button">Start Battle</button>
+                    <button id="auto-battle" class="action-button">Auto Battle</button>
+                    <div id="action-buttons" style="display: none;">
+                        <button id="basic-attack" class="action-button">Basic Attack</button>
+                        <button id="special-ability" class="action-button">Special Ability</button>
+                        <button id="cancel-action" class="action-button">Cancel</button>
+                    </div>
+                </div>
+                <div id="battle-container">
+                    <!-- Add this div for battle log -->
+                    <div id="battle-log" class="battle-log"></div>
+                </div>
+            </div>
+
+            <div class="progression-container">
+                <h2>Campaign Progress</h2>
+                <div class="stage-info">
+                    <div>Stage: <span id="current-stage">1-1</span></div>
+                    <div>Rewards: <span id="stage-rewards">100 Gold, 10 EXP</span></div>
+                </div>
+                <div class="idle-rewards">
+                    <h3>Idle Rewards</h3>
+                    <div>Gold per minute: <span id="gold-per-minute">10</span></div>
+                    <div>EXP per minute: <span id="exp-per-minute">5</span></div>
+                    <button id="collect-idle" class="action-button">Collect Idle Rewards</button>
+                </div>
+            </div>
+        </main>
+
+        <div class="modal" id="hero-details-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="hero-details" id="hero-details">
+                    <!-- Hero details will be shown here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets.js"></script>
+    <script src="equipment.js"></script>
+    <script src="ascension.js"></script>
+    <script src="quests.js"></script>
+    <script src="guild.js"></script>
+    <script src="heroes.js"></script>
+    <script src="battle.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
