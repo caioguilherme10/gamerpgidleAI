@@ -121,6 +121,25 @@ h3 {
     position: relative;
 }
 
+.hero-card.has-pet {
+    border: 2px solid #27ae60;
+}
+
+.hero-pet {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 1.5em;
+    background-color: rgba(39, 174, 96, 0.8);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
 .hero-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(233, 69, 96, 0.5);

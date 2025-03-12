@@ -11,6 +11,12 @@ function initializeGame() {
     // Initialize heroes
     initializeHeroes();
     
+    // Initialize dungeons
+    initializeDungeons();
+    
+    // Initialize pets
+    initializePets();
+    
     // Set up event listeners
     setupEventListeners();
     

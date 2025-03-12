@@ -103,6 +103,16 @@ function renderHeroesGrid() {
         heroCard.className = 'hero-card';
         heroCard.dataset.heroId = hero.id;
         
+        // Add pet indicator if hero has a pet equipped
+        const hasPet = equippedPets && equippedPets[hero.id];
+        if (hasPet) {
+            const petId = equippedPets[hero.id];
+            const pet = playerPets.find(p => p.id === petId);
+            if (pet) {
+                heroCard.classList.add('has-pet');
+            }
+        }
+        
         // Style based on rarity
         heroCard.style.borderColor = RARITIES[hero.rarity].color;
         heroCard.style.boxShadow = `0 0 5px ${RARITIES[hero.rarity].color}`;
@@ -125,13 +135,39 @@ function renderHeroesGrid() {
         heroRarity.textContent = RARITIES[hero.rarity].symbol;
         heroRarity.style.color = RARITIES[hero.rarity].color;
         
+        // Add pet icon if equipped
+        if (hasPet) {
+            const petIcon = document.createElement('div');
+            petIcon.className = 'hero-pet-icon';
+            const pet = playerPets.find(p => p.id === equippedPets[hero.id]);
+            if (pet) {
+                petIcon.innerHTML = PET_TYPES[pet.type].icon;
+            }
+            heroCard.appendChild(petIcon);
+        }
+        
         heroCard.appendChild(heroImage);
         heroCard.appendChild(heroName);
         heroCard.appendChild(heroLevel);
         heroCard.appendChild(heroRarity);
         
-        // Add click event to show hero details
-        heroCard.addEventListener('click', () => showHeroDetails(hero));
+        // Add click event to show hero details or select for pet
+        heroCard.addEventListener('click', (event) => {
+            // If we're in pet equipping mode and a pet is selected
+            if (selectedPetId && event.ctrlKey) {
+                selectHeroForPet(hero.id);
+            } else {
+                showHeroDetails(hero);
+            }
+        });
+        
+        // Add right-click event to select hero for pet equipping
+        heroCard.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            if (selectedPetId) {
+                selectHeroForPet(hero.id);
+            }
+        });
         
         heroesGrid.appendChild(heroCard);
     });

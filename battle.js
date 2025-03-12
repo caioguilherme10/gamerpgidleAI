@@ -96,6 +96,9 @@ function clearBattleState() {
         hero.currentHealth = hero.stats.health;
     });
     
+    // Reset pet ability cooldowns
+    resetPetAbilityCooldowns();
+    
     // Clear battle log
     document.getElementById('battle-log').innerHTML = '';
 }
@@ -131,6 +134,29 @@ function processTurn() {
         return;
     }
     
+    // Check for pet ability activation (for player heroes)
+    if (!currentUnit.isEnemy && Math.random() < 0.3) { // 30% chance to activate pet ability
+        const petId = equippedPets[currentUnit.id];
+        if (petId) {
+            const petAbilityUsed = usePetAbility(currentUnit.id);
+            if (petAbilityUsed) {
+                // Render battle to show effects
+                renderBattle();
+                // Small delay before continuing with turn
+                setTimeout(() => {
+                    continueWithTurn(currentUnit);
+                }, 1000);
+                return;
+            }
+        }
+    }
+    
+    // Continue with normal turn
+    continueWithTurn(currentUnit);
+}
+
+// Continue with turn after pet ability check
+function continueWithTurn(currentUnit) {
     // AI decision for enemies or auto-battle
     if (currentUnit.isEnemy || battleState.autoBattle) {
         setTimeout(() => {
@@ -513,34 +539,57 @@ function checkBattleEnd() {
         // Player lost
         battleState.inProgress = false;
         addBattleLog('You lost the battle!');
+        
+        // Check if this is a dungeon battle
+        if (currentDungeonRun && currentDungeonRun.inProgress) {
+            // Handle dungeon battle failure
+            handleDungeonBattleComplete(false);
+        }
+        
         return true;
     } else if (allEnemiesDefeated) {
         // Player won
         battleState.inProgress = false;
         
-        // Get current stage and rewards
-        const currentStage = document.getElementById('current-stage').textContent;
-        const stageData = CAMPAIGN_STAGES[currentStage];
-        
-        // Award rewards
-        if (stageData && stageData.rewards) {
-            const rewards = stageData.rewards;
+        // Check if this is a dungeon battle
+        if (currentDungeonRun && currentDungeonRun.inProgress) {
+            // Handle dungeon battle completion
+            handleDungeonBattleComplete(true);
             
-            // Update resources
-            document.getElementById('gold-amount').textContent = 
-                parseInt(document.getElementById('gold-amount').textContent) + rewards.gold;
+            // Add pet experience after battle
+            addPetExperienceAfterBattle(true);
+        } else {
+            // Regular campaign battle
+            // Get current stage and rewards
+            const currentStage = document.getElementById('current-stage').textContent;
+            const stageData = CAMPAIGN_STAGES[currentStage];
             
-            document.getElementById('exp-amount').textContent = 
-                parseInt(document.getElementById('exp-amount').textContent) + rewards.exp;
-            
-            document.getElementById('gems-amount').textContent = 
-                parseInt(document.getElementById('gems-amount').textContent) + rewards.gems;
-            
-            // Log rewards
-            addBattleLog(`Victory! You earned ${rewards.gold} gold, ${rewards.exp} EXP, and ${rewards.gems} gems!`);
-            
-            // Unlock next stage if available
-            unlockNextStage(currentStage);
+            // Award rewards
+            if (stageData && stageData.rewards) {
+                const rewards = stageData.rewards;
+                
+                // Update resources
+                document.getElementById('gold-amount').textContent = 
+                    parseInt(document.getElementById('gold-amount').textContent) + rewards.gold;
+                
+                document.getElementById('exp-amount').textContent = 
+                    parseInt(document.getElementById('exp-amount').textContent) + rewards.exp;
+                
+                document.getElementById('gems-amount').textContent = 
+                    parseInt(document.getElementById('gems-amount').textContent) + rewards.gems;
+                
+                // Log rewards
+                addBattleLog(`Victory! You earned ${rewards.gold} gold, ${rewards.exp} EXP, and ${rewards.gems} gems!`);
+                
+                // Unlock next stage if available
+                unlockNextStage(currentStage);
+                
+                // Add pet experience after battle
+                addPetExperienceAfterBattle(true);
+                
+                // Check for new unlockable pets
+                checkForNewPets();
+            }
         }
         
         return true;
